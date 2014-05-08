@@ -1,5 +1,5 @@
 use strict;
-use Test::More 'no_plan';
+use Test::More;
 
 use HTML::FillInForm::ForceUTF8;
 
@@ -26,3 +26,6 @@ $fdat->{bar} = "\xe3\x81\xaa\xe3\x81\x8c\xe3\x81\xae"; # UTF8 bytes
     );
     like $output, qr/$fdat->{foo}/;
 }
+
+done_testing();
+

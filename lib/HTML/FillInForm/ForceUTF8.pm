@@ -5,7 +5,7 @@ use warnings;
 use base qw(HTML::FillInForm);
 use Encode;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub fill {
     my ( $self, %option ) = @_;
@@ -18,9 +18,10 @@ sub fill {
             $option{file} = $fh;
         }
     }
-    elsif ( exists $option{scalarref} ) {
-        Encode::_utf8_on( ${ $option{scalarref} } )
-          unless Encode::is_utf8( ${ $option{scalarref} } );
+    elsif ( exists $option{scalarref} && !Encode::is_utf8($option{scalarref}) ) {
+        my $val = ${$option{scalarref}};
+        Encode::_utf8_on( $val );
+        $option{scalarref} = \$val;
     }
     elsif ( exists $option{arrayref} ) {
         for ( @{ $option{arrayref} } ) {
@@ -40,8 +41,9 @@ sub _get_param {
 }
 
 1;
-
 __END__
+
+=encoding utf-8
 
 =head1 NAME
 
@@ -62,27 +64,24 @@ HTML::FillInForm::ForceUTF8 -  FillInForm with utf8 encoding
     fdat => $fdat
   );
 
-
 =head1 DESCRIPTION
 
-HTML::FillInForm::ForceUTF8 is a subclass of HTML::FillInForm that forces utf8 flag on html and parameters.
-This allows you to prevent filling garbled result.
+HTML::FillInForm::ForceUTF8 is a subclass of HTML::FillInForm that forces utf8 flag on html and parameters. This allows you to prevent filling garbled result.
 
 =head1 SEE ALSO
 
 L<HTML::FillInForm>
 
-=head1 AUTHOR
+=head1 LICENSE
 
-Masahiro Nagano, E<lt>kazeburo@nomadscafe.jpE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (C) 2006 by Masahiro Nagano
+Copyright (C) Masahiro Nagano.
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.5 or,
-at your option, any later version of Perl 5 you may have available.
+it under the same terms as Perl itself.
 
+=head1 AUTHOR
+
+Masahiro Nagano E<lt>kazeburo@gmail.comE<gt>
 
 =cut
+

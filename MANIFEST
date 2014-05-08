@@ -1,8 +1,12 @@
+Build.PL
 Changes
+LICENSE
+META.json
+README.md
+cpanfile
 lib/HTML/FillInForm/ForceUTF8.pm
-Makefile.PL
-MANIFEST
-README
-t/00-load.t
+minil.toml
+t/00_compile.t
 t/01_unicode.t
-META.yml                                 Module meta-data (added by MakeMaker)
+META.yml
+MANIFEST
